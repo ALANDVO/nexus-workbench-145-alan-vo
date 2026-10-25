@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "current_feature": "skeleton",
+  "features": [
+    {
+      "id": "skeleton",
+      "title": "FastAPI/React skeleton with health endpoint",
+      "status": "done",
+      "acceptance": [
+        "FastAPI backend starts and serves /health",
+        "React frontend builds and serves on dev server",
+        "Docker compose runs both services",
+        "Backend tests pass (pytest)",
+        "Frontend tests pass (vitest)"
+      ],
+      "implementation": [
+        "backend/app/main.py",
+        "backend/app/core/config.py",
+        "backend/app/api/v1/health.py",
+        "backend/requirements.txt",
+        "backend/Dockerfile",
+        "backend/.dockerignore",
+        "backend/tests/test_health.py",
+        "frontend/package.json",
+        "frontend/tsconfig.json",
+        "frontend/vite.config.ts",
+        "frontend/src/main.tsx",
+        "frontend/src/App.tsx",
+        "frontend/src/index.css",
+        "frontend/index.html",
+        "frontend/vitest.config.ts",
+        "frontend/src/test-setup.ts",
+        "frontend/src/App.test.tsx",
+        "frontend/Dockerfile",
+        "frontend/nginx.conf",
+        "frontend/.dockerignore",
+        "compose.yaml",
+        ".env.example",
+        ".gitignore",
+        ".github/workflows/ci.yml",
+        "README.md",
+        "LICENSE",
+        "CHANGELOG.md",
+        "portfolio.json",
+        "pyproject.toml"
+      ],
+      "tests": [
+        "backend/tests/test_health.py",
+        "frontend/src/App.test.tsx"
+      ]
+    },
+    {
+      "id": "plugin-catalog",
+      "title": "Plugin catalog API and UI",
+      "status": "planned",
+      "acceptance": [
+        "API returns list of plugins from YAML configs",
+        "UI displays plugin cards with name, description, status"
+        ],
+      "implementation": [],
+      "tests": []
+    },
+    {
+      "id": "skill-browser",
+      "title": "Skill browser with stability filtering",
+      "status": "planned",
+      "acceptance": [
+        "API returns skills with stability frontmatter",
+        "UI filters skills by experimental/stable/deprecated",
+        "Skill detail view shows full markdown"
+      ],
+      "implementation": [],
+      "tests": []
+    },
+    {
+      "id": "issue-tracker",
+      "title": "GitHub issue sync and display",
+      "status": "planned",
+      "acceptance": [
+        "Background sync fetches issues from upstream repo",
+        "UI displays issues with labels, status, comments",
+        "Filter by plugin/domain"
+      ],
+      "implementation": [],
+      "tests": []
+    },
+    {
+      "id": "auth-oidc",
+      "title": "OIDC authentication with Keycloak",
+      "status": "planned",
+      "acceptance": [
+        "Login redirects to Keycloak",
+        "Callback exchanges code for tokens",
+        "Protected endpoints require valid session",
+        "Logout clears session"
+      ],
+      "implementation": [],
+      "tests": []
+    }
+  ]
+}
