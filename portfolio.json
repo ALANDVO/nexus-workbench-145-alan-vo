@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "name": "nexus-workbench-145-alan-vo",
+  "owner": "ALANDVO",
+  "email": "alanvo@gmail.com",
+  "domain": "AI/ML developer tools",
+  "workflows": [
+    "Browse plugin catalog with search and filter",
+    "View skills with stability lifecycle filtering (experimental/stable/deprecated)",
+    "Track GitHub issues across plugins with domain filtering"
+  ],
+  "auth": "oidc-keycloak-saml-broker",
+  "llm_providers": [
+    "openai-compatible",
+    "anthropic",
+    "gemini",
+    "ollama"
+  ],
+  "summary": "Work in progress: nexus-workbench-145-alan-vo",
+  "status": "work-in-progress"
+}
