@@ -1,0 +1,9 @@
+name: Marketing
+description: Content creation, SEO, and campaign planning
+version: 1.0.0
+author: Alan Vo
+status: active
+tags: ["marketing", "content", "seo", "campaign"]
+repository: https://github.com/anthropics/knowledge-work-plugins
+homepage: https://github.com/anthropics/knowledge-work-plugins/tree/main/marketing
+license: Apache-2.0

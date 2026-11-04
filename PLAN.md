@@ -4,7 +4,7 @@ Each round completes one feature or repair. Future items are planned, not implem
 
 ## Current round
 
-skeleton
+plugin-catalog
 
 ## Roadmap
 
@@ -25,11 +25,15 @@ Tests: `backend/tests/test_health.py`, `frontend/src/App.test.tsx`
 
 ### plugin-catalog — Plugin catalog API and UI
 
-Status: planned
+Status: done
 
 Acceptance:
 - API returns list of plugins from YAML configs
 - UI displays plugin cards with name, description, status
+
+Implementation: `backend/app/models/plugin.py`, `backend/app/services/plugin_catalog.py`, `backend/app/api/v1/plugins.py`, `backend/app/main.py`, `plugins/bio-research/plugin.yaml`, `plugins/productivity/plugin.yaml`, `plugins/marketing/plugin.yaml`, `frontend/src/PluginCatalog.tsx`, `frontend/src/App.tsx`
+
+Tests: `backend/tests/test_plugins.py`
 
 ### skill-browser — Skill browser with stability filtering
 

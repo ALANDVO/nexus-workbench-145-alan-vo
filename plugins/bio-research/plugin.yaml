@@ -1,0 +1,9 @@
+name: Bio Research
+description: Bioinformatics and computational biology workflows for research
+version: 1.0.0
+author: Alan Vo
+status: active
+tags: ["bioinformatics", "genomics", "nextflow"]
+repository: https://github.com/anthropics/knowledge-work-plugins
+homepage: https://github.com/anthropics/knowledge-work-plugins/tree/main/bio-research
+license: Apache-2.0

@@ -1,0 +1,9 @@
+name: Productivity
+description: Personal productivity and workflow automation tools
+version: 1.0.0
+author: Alan Vo
+status: active
+tags: ["productivity", "automation", "calendar"]
+repository: https://github.com/anthropics/knowledge-work-plugins
+homepage: https://github.com/anthropics/knowledge-work-plugins/tree/main/productivity
+license: Apache-2.0

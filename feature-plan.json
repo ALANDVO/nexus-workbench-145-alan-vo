@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_feature": "skeleton",
+  "current_feature": "plugin-catalog",
   "features": [
     {
       "id": "skeleton",
@@ -52,13 +52,13 @@
     {
       "id": "plugin-catalog",
       "title": "Plugin catalog API and UI",
-      "status": "planned",
+      "status": "done",
       "acceptance": [
         "API returns list of plugins from YAML configs",
         "UI displays plugin cards with name, description, status"
         ],
-      "implementation": [],
-      "tests": []
+      "implementation": ["backend/app/models/plugin.py", "backend/app/services/plugin_catalog.py", "backend/app/api/v1/plugins.py", "backend/app/main.py", "plugins/bio-research/plugin.yaml", "plugins/productivity/plugin.yaml", "plugins/marketing/plugin.yaml", "frontend/src/PluginCatalog.tsx", "frontend/src/App.tsx"],
+      "tests": ["backend/tests/test_plugins.py"]
     },
     {
       "id": "skill-browser",

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
 ## 1.0.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
@@ -19,4 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Frontend tests (vitest + React Testing Library)
 - GitHub Actions CI workflow
 - Configuration via environment variables
+- MIT License
+- Plugin catalog API with YAML-based plugin configuration
+- Plugin models (Plugin, PluginStatus, PluginListResponse)
+- Plugin catalog service loading plugins from plugins/ directory
+- Sample plugin configs: bio-research, productivity, marketing
+- Backend tests for plugin catalog endpoint
+- PluginCatalog frontend component with responsive grid layout
+- Plugin cards displaying name, description, version, status, tags, and repository link
 - MIT License

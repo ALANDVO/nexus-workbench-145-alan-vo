@@ -1,4 +1,4 @@
-# Nexus Workbench
+# Nexus Workbench — Alan Vo
 
 > Work in progress. This checkpoint may be incomplete or fail tests. See PLAN.md and STATUS.md before use.
 
@@ -91,6 +91,7 @@ npm test
 ## API Reference
 
 - `GET /api/v1/health` — Health check endpoint
+- `GET /api/v1/plugins` — List all plugins with metadata
 
 ## Configuration
 

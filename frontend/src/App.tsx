@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { PluginCatalog } from './PluginCatalog'
 
 function App() {
   const [health, setHealth] = useState<{ status: string; service: string; version: string } | null>(null)
@@ -40,6 +41,7 @@ function App() {
             </div>
           )}
         </section>
+        <PluginCatalog />
       </main>
     </div>
   )
