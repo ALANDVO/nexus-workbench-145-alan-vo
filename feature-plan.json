@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_feature": "plugin-catalog",
+  "current_feature": "skill-browser",
   "features": [
     {
       "id": "skeleton",
@@ -56,21 +56,51 @@
       "acceptance": [
         "API returns list of plugins from YAML configs",
         "UI displays plugin cards with name, description, status"
-        ],
-      "implementation": ["backend/app/models/plugin.py", "backend/app/services/plugin_catalog.py", "backend/app/api/v1/plugins.py", "backend/app/main.py", "plugins/bio-research/plugin.yaml", "plugins/productivity/plugin.yaml", "plugins/marketing/plugin.yaml", "frontend/src/PluginCatalog.tsx", "frontend/src/App.tsx"],
-      "tests": ["backend/tests/test_plugins.py"]
+      ],
+      "implementation": [
+        "backend/app/models/plugin.py",
+        "backend/app/services/plugin_catalog.py",
+        "backend/app/api/v1/plugins.py",
+        "backend/app/main.py",
+        "plugins/bio-research/plugin.yaml",
+        "plugins/productivity/plugin.yaml",
+        "plugins/marketing/plugin.yaml",
+        "frontend/src/PluginCatalog.tsx",
+        "frontend/src/App.tsx"
+      ],
+      "tests": [
+        "backend/tests/test_plugins.py"
+      ]
     },
     {
       "id": "skill-browser",
       "title": "Skill browser with stability filtering",
-      "status": "planned",
+      "status": "done",
       "acceptance": [
         "API returns skills with stability frontmatter",
         "UI filters skills by experimental/stable/deprecated",
         "Skill detail view shows full markdown"
       ],
-      "implementation": [],
-      "tests": []
+      "implementation": [
+        "backend/app/models/skill.py",
+        "backend/app/services/skill_catalog.py",
+        "backend/app/api/v1/skills.py",
+        "backend/app/main.py",
+        "backend/app/models/__init__.py",
+        "backend/tests/test_skills.py",
+        "plugins/bio-research/skills/generate-samplesheet/SKILL.md",
+        "plugins/bio-research/skills/run-sarek/SKILL.md",
+        "plugins/marketing/skills/content-quality/SKILL.md",
+        "plugins/marketing/skills/seo-optimizer/SKILL.md",
+        "plugins/productivity/skills/daily-briefing/SKILL.md",
+        "plugins/productivity/skills/task-automation/SKILL.md",
+        "frontend/src/SkillBrowser.tsx",
+        "frontend/src/App.tsx"
+      ],
+      "tests": [
+        "backend/tests/test_skills.py",
+        "frontend/src/App.test.tsx"
+      ]
     },
     {
       "id": "issue-tracker",

@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.api.v1.health import router as health_router
 from app.api.v1.plugins import router as plugins_router
+from app.api.v1.skills import router as skills_router
 
 
 @asynccontextmanager
@@ -29,8 +30,9 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
-app.include_router(health_router, prefix="/api/v1")
-app.include_router(plugins_router, prefix="/api/v1")
+    app.include_router(health_router, prefix="/api/v1")
+    app.include_router(plugins_router, prefix="/api/v1")
+    app.include_router(skills_router, prefix="/api/v1")
 
     return app
 

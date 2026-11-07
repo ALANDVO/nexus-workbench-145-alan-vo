@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import { PluginCatalog } from './PluginCatalog'
+import { SkillBrowser } from './SkillBrowser'
 
 function App() {
   const [health, setHealth] = useState<{ status: string; service: string; version: string } | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [activeTab, setActiveTab] = useState<'plugins' | 'skills'>('plugins')
 
   useEffect(() => {
     fetch('/api/v1/health')
@@ -41,7 +43,24 @@ function App() {
             </div>
           )}
         </section>
-        <PluginCatalog />
+
+        <nav style={styles.tabs}>
+          <button
+            onClick={() => setActiveTab('plugins')}
+            style={{ ...styles.tab, ...(activeTab === 'plugins' ? styles.tabActive : {}) }}
+          >
+            Plugins
+          </button>
+          <button
+            onClick={() => setActiveTab('skills')}
+            style={{ ...styles.tab, ...(activeTab === 'skills' ? styles.tabActive : {}) }}
+          >
+            Skills
+          </button>
+        </nav>
+
+        {activeTab === 'plugins' && <PluginCatalog />}
+        {activeTab === 'skills' && <SkillBrowser />}
       </main>
     </div>
   )
@@ -55,7 +74,7 @@ const styles: Record<string, React.CSSProperties> = {
     background: '#fafafa',
   },
   header: {
-    maxWidth: '800px',
+    maxWidth: '1000px',
     margin: '0 auto 2rem',
     textAlign: 'center',
   },
@@ -71,7 +90,7 @@ const styles: Record<string, React.CSSProperties> = {
     marginBottom: '2rem',
   },
   main: {
-    maxWidth: '800px',
+    maxWidth: '1000px',
     margin: '0 auto',
   },
   card: {
@@ -79,6 +98,7 @@ const styles: Record<string, React.CSSProperties> = {
     padding: '1.5rem',
     borderRadius: '8px',
     boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+    marginBottom: '2rem',
   },
   error: {
     color: '#c62828',
@@ -90,6 +110,28 @@ const styles: Record<string, React.CSSProperties> = {
     borderRadius: '9999px',
     fontSize: '0.875rem',
     fontWeight: 500,
+  },
+  tabs: {
+    display: 'flex',
+    gap: '0.5rem',
+    marginBottom: '1.5rem',
+    borderBottom: '1px solid #e0e0e0',
+    paddingBottom: '0.5rem',
+  },
+  tab: {
+    padding: '0.5rem 1.5rem',
+    border: 'none',
+    background: 'transparent',
+    cursor: 'pointer',
+    fontSize: '1rem',
+    fontWeight: 500,
+    color: '#666',
+    borderBottom: '2px solid transparent',
+    transition: 'all 0.15s ease',
+  },
+  tabActive: {
+    color: '#1976d2',
+    borderBottomColor: '#1976d2',
   },
 }
 
