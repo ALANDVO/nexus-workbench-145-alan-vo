@@ -123,3 +123,7 @@ This application serves as a catalog for AI/ML plugins. Evaluation of individual
 ## License
 
 MIT License — Copyright (c) 2026 Alan Vo <alanvo@gmail.com>
+
+---
+
+Alan Vo · [alanvo.net](https://alanvo.net)

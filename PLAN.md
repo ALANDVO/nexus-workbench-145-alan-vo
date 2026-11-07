@@ -67,3 +67,6 @@ Acceptance:
 - Protected endpoints require valid session
 - Logout clears session
 
+---
+
+Alan Vo · [alanvo.net](https://alanvo.net)

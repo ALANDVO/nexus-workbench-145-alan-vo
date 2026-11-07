@@ -53,3 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Backend tests for skills API (list, filter by plugin, filter by stability, get content)
 - Frontend tests updated to mock both health and plugins endpoints
 - python-frontmatter dependency for parsing SKILL.md frontmatter
+
+---
+
+Alan Vo · [alanvo.net](https://alanvo.net)
