@@ -4,7 +4,7 @@ Each round completes one feature or repair. Future items are planned, not implem
 
 ## Current round
 
-plugin-catalog
+skill-browser
 
 ## Roadmap
 
@@ -37,12 +37,16 @@ Tests: `backend/tests/test_plugins.py`
 
 ### skill-browser — Skill browser with stability filtering
 
-Status: planned
+Status: done
 
 Acceptance:
 - API returns skills with stability frontmatter
 - UI filters skills by experimental/stable/deprecated
 - Skill detail view shows full markdown
+
+Implementation: `backend/app/models/skill.py`, `backend/app/services/skill_catalog.py`, `backend/app/api/v1/skills.py`, `backend/app/main.py`, `backend/app/models/__init__.py`, `backend/tests/test_skills.py`, `plugins/bio-research/skills/generate-samplesheet/SKILL.md`, `plugins/bio-research/skills/run-sarek/SKILL.md`, `plugins/marketing/skills/content-quality/SKILL.md`, `plugins/marketing/skills/seo-optimizer/SKILL.md`, `plugins/productivity/skills/daily-briefing/SKILL.md`, `plugins/productivity/skills/task-automation/SKILL.md`, `frontend/src/SkillBrowser.tsx`, `frontend/src/App.tsx`
+
+Tests: `backend/tests/test_skills.py`, `frontend/src/App.test.tsx`
 
 ### issue-tracker — GitHub issue sync and display
 

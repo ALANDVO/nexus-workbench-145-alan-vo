@@ -92,6 +92,8 @@ npm test
 
 - `GET /api/v1/health` — Health check endpoint
 - `GET /api/v1/plugins` — List all plugins with metadata
+- `GET /api/v1/skills` — List all skills with optional `plugin_id` and `stability` filters
+- `GET /api/v1/skills/{plugin_id}/{skill_id}/content` — Get full markdown content of a skill
 
 ## Configuration
 

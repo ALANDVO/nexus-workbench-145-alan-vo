@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
 ## 1.1.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
@@ -32,3 +36,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PluginCatalog frontend component with responsive grid layout
 - Plugin cards displaying name, description, version, status, tags, and repository link
 - MIT License
+
+## [1.1.0] - 2026-11-07
+
+### Added
+- Skill browser feature with stability filtering (experimental/stable/deprecated)
+- Skill models (Skill, SkillStability, SkillListResponse) with stability enum
+- Skill catalog service loading SKILL.md files with frontmatter from plugins/*/skills/
+- Skills API endpoints: GET /api/v1/skills (with plugin_id, stability filters), GET /api/v1/skills/{plugin_id}/{skill_id}/content
+- Sample skills across all three plugins: bio-research (2), marketing (2), productivity (2)
+- SkillBrowser frontend component with:
+  - Plugin filter dropdown (all, bio-research, marketing, productivity)
+  - Stability filter dropdown (all, experimental, stable, deprecated)
+  - Skills list with stability badges (color-coded: orange/green/gray)
+  - Skill detail panel showing full markdown content
+- Backend tests for skills API (list, filter by plugin, filter by stability, get content)
+- Frontend tests updated to mock both health and plugins endpoints
+- python-frontmatter dependency for parsing SKILL.md frontmatter
