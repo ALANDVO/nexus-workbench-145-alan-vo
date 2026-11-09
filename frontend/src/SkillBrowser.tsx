@@ -64,7 +64,7 @@ export function SkillBrowser() {
     }
   }
 
-  const filteredSkills = skills
+  const displaySkills = skills
 
   if (loading) return <p>Loading skills...</p>
   if (error) return <p style={{ color: 'red' }}>Error: {error}</p>
@@ -104,15 +104,26 @@ export function SkillBrowser() {
 
       <div style={styles.layout}>
         <div style={styles.skillsList}>
-          <h3 style={styles.listTitle}>Skills ({filteredSkills.length})</h3>
-          {filteredSkills.length === 0 ? (
+          <h3 style={styles.listTitle}>Skills ({displaySkills.length})</h3>
+          {displaySkills.length === 0 ? (
             <p style={styles.empty}>No skills found matching filters.</p>
           ) : (
-            <ul style={styles.list}>
-              {filteredSkills.map((skill) => (
-                <li key={skill.id} style={styles.listItem}>
+            <ul style={styles.list} role="listbox" aria-label="Skills list">
+              {displaySkills.map((skill, index) => (
+                <li key={skill.id} style={styles.listItem} role="option" aria-selected={selectedSkill?.id === skill.id}>
                   <button
                     onClick={() => fetchSkillContent(skill)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'ArrowDown') {
+                        e.preventDefault()
+                        const nextIndex = (index + 1) % displaySkills.length
+                        fetchSkillContent(displaySkills[nextIndex])
+                      } else if (e.key === 'ArrowUp') {
+                        e.preventDefault()
+                        const prevIndex = (index - 1 + displaySkills.length) % displaySkills.length
+                        fetchSkillContent(displaySkills[prevIndex])
+                      }
+                    }}
                     style={{
                       ...styles.skillButton,
                       background: selectedSkill?.id === skill.id ? '#e3f2fd' : 'white',
@@ -350,3 +361,4 @@ const styles: Record<string, React.CSSProperties> = {
     fontFamily: 'inherit',
   },
 }
+
