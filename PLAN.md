@@ -50,12 +50,16 @@ Tests: `backend/tests/test_skills.py`, `frontend/src/App.test.tsx`
 
 ### issue-tracker — GitHub issue sync and display
 
-Status: planned
+Status: in_progress
 
 Acceptance:
 - Background sync fetches issues from upstream repo
 - UI displays issues with labels, status, comments
 - Filter by plugin/domain
+
+Implementation: `backend/app/models/issue.py`, `backend/app/services/issue_catalog.py`, `backend/app/api/v1/issues.py`, `backend/app/main.py`, `backend/tests/test_issues.py`
+
+Tests: `backend/tests/test_issues.py`
 
 ### auth-oidc — OIDC authentication with Keycloak
 

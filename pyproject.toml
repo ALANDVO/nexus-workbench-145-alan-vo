@@ -1,6 +1,6 @@
 [project]
 name = "nexus-workbench"
-version = "1.0.0"
+version = "1.4.0"
 description = "Plugin catalog and skill browser for Claude Cowork with AI/ML focus"
 readme = "README.md"
 license = {text = "MIT"}
