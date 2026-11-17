@@ -105,14 +105,22 @@
     {
       "id": "issue-tracker",
       "title": "GitHub issue sync and display",
-      "status": "planned",
+      "status": "in_progress",
       "acceptance": [
         "Background sync fetches issues from upstream repo",
         "UI displays issues with labels, status, comments",
         "Filter by plugin/domain"
       ],
-      "implementation": [],
-      "tests": []
+      "implementation": [
+        "backend/app/models/issue.py",
+        "backend/app/services/issue_catalog.py",
+        "backend/app/api/v1/issues.py",
+        "backend/app/main.py",
+        "backend/tests/test_issues.py"
+      ],
+      "tests": [
+        "backend/tests/test_issues.py"
+      ]
     },
     {
       "id": "auth-oidc",

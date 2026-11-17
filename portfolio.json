@@ -17,5 +17,6 @@
     "ollama"
   ],
   "summary": "Work in progress: nexus-workbench-145-alan-vo",
-  "status": "work-in-progress"
+  "status": "work-in-progress",
+  "version": "1.4.0"
 }
