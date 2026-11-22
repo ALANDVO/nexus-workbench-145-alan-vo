@@ -64,7 +64,7 @@ async def test_get_issue():
 async def test_sync_endpoint():
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:
-        response = await client.get("/api/v1/issues/sync")
+        response = await client.get("/api/v1/github-sync")
         assert response.status_code == 200
         data = response.json()
         assert "message" in data
