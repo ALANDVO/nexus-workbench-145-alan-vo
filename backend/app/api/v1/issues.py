@@ -37,7 +37,7 @@ async def get_issue(issue_id: int) -> GitHubIssue:
     raise HTTPException(status_code=404, detail="Issue not found")
 
 
-@router.get("/issues/sync", summary="Trigger issue sync")
+@router.get("/github-sync", summary="Trigger issue sync")
 async def trigger_sync():
     """Trigger sync with GitHub repository."""
     issues = issue_catalog_service.sync_issues_from_github()
