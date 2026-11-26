@@ -1,6 +1,21 @@
 # Changelog
 
+## 1.6.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
 ## 1.5.0 — work-in-progress checkpoint
+
+## 1.5.1 — GitHub issue sync implementation
+### Changed
+- **issue-catalog service**: Enhanced `sync_issues_from_github()` to fetch real issues from GitHub API
+  instead of using hardcoded sample data. Now integrates with the GitHub REST API to fetch issues
+  from `anthropics/knowledge-work-plugins` repository.
+- **API endpoints**: `/api/v1/issues` and `/api/v1/github-sync` now return real GitHub issues with
+  labels, assignees, status, and metadata.
+- **Cache**: Issues are persisted to `data/issues_cache.json` for subsequent calls.
+### Fixed
+- Test assertions updated to match real GitHub API behavior (issues don't carry plugin_id/domain natively).
 
 Partial code published for continued development. Known issues: STATUS.md.
 
