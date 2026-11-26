@@ -2,6 +2,8 @@ import json
 from pathlib import Path
 from typing import List, Optional
 
+import requests
+
 from app.models.issue import GitHubIssue, IssueListResponse, IssueStatus, IssuePriority
 
 
@@ -10,7 +12,8 @@ class IssueCatalogService:
         self.data_dir = Path(__file__).parent.parent.parent.parent / "data"
         self.cache_file = self.data_dir / "issues_cache.json"
         self.sync_needed_file = self.data_dir / "sync_needed.flag"
-        
+        self.default_repository = "anthropics/knowledge-work-plugins"
+    
     def load_issues_from_cache(self) -> List[GitHubIssue]:
         """Load issues from cache file if it exists."""
         if not self.cache_file.exists():
@@ -24,147 +27,124 @@ class IssueCatalogService:
             return []
     
     def sync_issues_from_github(self, repository: str = "anthropics/knowledge-work-plugins") -> List[GitHubIssue]:
-        """Sync issues from GitHub repository. This is a placeholder for actual GitHub API integration."""
+        """Sync issues from GitHub repository."""
         issues = self.load_issues_from_cache()
         
-        if not issues:
-            issues = self._fetch_from_github_api(repository)
-            self._save_to_cache(issues)
+        # Always try to fetch from GitHub API to get fresh data
+        github_issues = self._fetch_from_github_api(repository)
+        if github_issues:
+            self._save_to_cache(github_issues)
+            return github_issues
         
+        # Fall back to cache if API fails
         return issues
     
     def _fetch_from_github_api(self, repository: str) -> List[GitHubIssue]:
-        """Placeholder for actual GitHub API fetching. In production, this would use requests library."""
-        sample_issues = [
-            {
-                "id": 1,
-                "title": "Sarek FASTQ samplesheets fail validation because BAM and BAI are always required",
-                "description": "On main at 95bdacc803aa5cfdb10f35e5b9fb2d4b11100133, Sarek samplesheet generation reports missing BAM and BAI columns for FASTQ input.",
-                "status": "open",
-                "priority": "high",
-                "labels": ["bug", "sarek", "validation"],
-                "author": "OpenHands",
-                "plugin_id": "bio-research",
-                "domain": "bio-research",
-                "created_at": "2026-01-15T10:00:00",
-                "updated_at": "2026-11-15T14:30:00",
-                "comments": [
-                    "Steps to reproduce: Put two valid FASTQ files in ./fastqs",
-                    "Expected behavior: FASTQ rows should not require BAM or BAI columns",
-                    "Validator collects required columns then leaves conditional check as pass"
-                ],
-                "assignees": [],
-                "repository": repository,
-                "url": f"https://github.com/{repository}/issues/1"
-            },
-            {
-                "id": 2,
-                "title": "Add stability lifecycle frontmatter to skills (experimental/stable/deprecated)",
-                "description": "Skills in this plugin have no stability indicator. An AI agent cannot distinguish a well-tested default skill from a new/beta one.",
-                "status": "closed",
-                "priority": "medium",
-                "labels": ["enhancement", "stability", "skill-browser"],
-                "author": "Alan Vo",
-                "plugin_id": "marketing",
-                "domain": "marketing",
-                "created_at": "2026-02-20T09:15:00",
-                "updated_at": "2026-11-10T16:45:00",
-                "comments": [
-                    "Proposed solution: Add stability: frontmatter field with experimental/stable/deprecated values"
-                ],
-                "assignees": [],
-                "repository": repository,
-                "url": f"https://github.com/{repository}/issues/2"
-            },
-            {
-                "id": 3,
-                "title": "google-calendar MCP server turned down — productivity plugin broken",
-                "description": "The google-calendar MCP connection used by the productivity plugin stopped working.",
-                "status": "in_progress",
-                "priority": "high",
-                "labels": ["bug", "mcp", "productivity", "calendar"],
-                "author": "Claude Code",
-                "plugin_id": "productivity",
-                "domain": "productivity",
-                "created_at": "2026-04-17T12:00:00",
-                "updated_at": "2026-11-12T18:20:00",
-                "comments": [
-                    "Original server at gcal.mcp.claude.com has been shut down",
-                    "Replacement endpoint doesn't support dynamic client registration"
-                ],
-                "assignees": ["Alan Vo"],
-                "repository": repository,
-                "url": f"https://github.com/{repository}/issues/3"
-            },
-            {
-                "id": 4,
-                "title": "Built-in create-shortcut skill references non-existent set_scheduled_task tool",
-                "description": "The create-shortcut skill references a set_scheduled_task tool that does not exist in the session's available tool set.",
-                "status": "open",
-                "priority": "low",
-                "labels": ["bug", "skill", "create-shortcut"],
-                "author": "Alan Vo",
-                "plugin_id": "productivity",
-                "domain": "productivity",
-                "created_at": "2026-02-05T14:30:00",
-                "updated_at": "2026-11-13T11:10:00",
-                "comments": [
-                    "Cowork loads the create-shortcut skill",
-                    "Skill instructs Claude to call the set_scheduled_task tool",
-                    "Claude cannot find the tool and enters a loop searching for it"
-                ],
-                "assignees": [],
-                "repository": repository,
-                "url": f"https://github.com/{repository}/issues/4"
-            },
-            {
-                "id": 5,
-                "title": "legal:ms365 plugin/mcp authentication error",
-                "description": "When trying to authenticate the ms365 plugin for legal, the following error is thrown: AADSTS9000411: The request is not properly formatted. The parameter 'prompt' is duplicated.",
-                "status": "open",
-                "priority": "medium",
-                "labels": ["bug", "auth", "ms365", "legal"],
-                "author": "OpenHands",
-                "plugin_id": "legal",
-                "domain": "legal",
-                "created_at": "2026-03-10T08:45:00",
-                "updated_at": "2026-11-14T15:55:00",
-                "comments": [
-                    "Error occurs when removing first prompt parameter",
-                    "Another error: AADSTS900971: No reply address provided"
-                ],
-                "assignees": [],
-                "repository": repository,
-                "url": f"https://github.com/{repository}/issues/5"
+        """Fetch issues from GitHub API."""
+        try:
+            url = f"https://api.github.com/repos/{repository}/issues"
+            params = {
+                "per_page": 100,
+                "state": "all",
+                "sort": "created",
+                "direction": "desc"
             }
-        ]
-        
-        return [GitHubIssue(**issue) for issue in sample_issues]
+            headers = {
+                "Accept": "application/vnd.github.v3+api"
+            }
+            resp = requests.get(url, params=params, headers=headers, timeout=30)
+            
+            if resp.status_code != 200:
+                print(f"GitHub API returned status {resp.status_code}")
+                return []
+            
+            issues_data = resp.json()
+            issues = []
+            for issue_data in issues_data:
+                # Map GitHub API response to GitHubIssue model
+                # Extract labels
+                labels = [label["name"] for label in issue_data.get("labels", [])]
+                
+                # Extract assignees
+                assignees = [assignee["login"] for assignee in issue_data.get("assignees", [])]
+                
+                # Get author/login
+                author_data = issue_data.get("user", {})
+                author = author_data.get("login") if author_data else None
+                
+                # Get body/description
+                body = issue_data.get("body")
+                
+                # Get created_at and updated_at
+                created_at = issue_data.get("created_at")
+                updated_at = issue_data.get("updated_at")
+                
+                # Build the issue, only include fields that exist in the model
+                issue_dict = {
+                    "id": issue_data["id"],
+                    "title": issue_data["title"],
+                    "description": body,
+                    "status": IssueStatus(issue_data.get("state", "open")).value 
+                        if issue_data.get("state") in ["open", "closed"] 
+                        else IssueStatus.OPEN,
+                    "priority": IssuePriority.MEDIUM,  # Default, GitHub doesn't have priority directly
+                    "labels": labels,
+                    "author": author,
+                    "plugin_id": None,
+                    "domain": None,
+                    "created_at": created_at,
+                    "updated_at": updated_at,
+                    "comments": [],  # We'd need separate API call for comments
+                    "assignees": assignees,
+                    "repository": repository,
+                    "url": issue_data.get("html_url", f"https://github.com/{repository}/issues/{issue_data['number']}")
+                }
+                issues.append(GitHubIssue(**issue_dict))
+            
+            return issues
+            
+        except requests.RequestException as e:
+            print(f"GitHub API request error: {e}")
+            return []
+        except Exception as e:
+            print(f"Error fetching from GitHub API: {e}")
+            return []
     
     def _save_to_cache(self, issues: List[GitHubIssue]):
         """Save issues to cache file."""
-        self.data_dir.mkdir(exist_ok=True)
-        data = [issue.dict() for issue in issues]
-        
-        with open(self.cache_file, "w") as f:
-            json.dump(data, f, indent=2)
+        try:
+            self.data_dir.mkdir(parents=True, exist_ok=True)
+            serializable = []
+            for issue in issues:
+                d = {}
+                for field, value in issue.model_dump().items():
+                    if value is not None:
+                        d[field] = value
+                serializable.append(d)
+            with open(self.cache_file, "w") as f:
+                json.dump(serializable, f, indent=2)
+        except Exception as e:
+            print(f"Error saving to cache: {e}")
     
     def _needs_sync(self) -> bool:
         """Check if a sync is needed."""
-        if not self.sync_needed_file.exists():
+        if not self.cache_file.exists():
             return True
         
         try:
-            with open(self.sync_needed_file, "r") as f:
-                return f.read().strip().lower() == "true"
+            import os
+            cache_mtime = self.cache_file.stat().st_mtime
+            flag_content = self.sync_needed_file.read_text().strip() if self.sync_needed_file.exists() else "true"
+            return flag_content == "true"
         except Exception:
             return True
     
     def mark_sync_completed(self):
         """Mark that sync has been completed."""
-        self.data_dir.mkdir(exist_ok=True)
-        with open(self.sync_needed_file, "w") as f:
-            f.write("false")
+        try:
+            self.sync_needed_file.write_text("false")
+        except Exception:
+            pass
     
     def get_issues(
         self,
@@ -177,8 +157,7 @@ class IssueCatalogService:
         issues = self.load_issues_from_cache()
         
         if not issues:
-            issues = self._fetch_from_github_api("anthropics/knowledge-work-plugins")
-            self._save_to_cache(issues)
+            issues = self.sync_issues_from_github()
         
         filtered_issues = issues
         
@@ -192,9 +171,11 @@ class IssueCatalogService:
             filtered_issues = [i for i in filtered_issues if i.status == status]
         
         if labels:
-            filtered_issues = [i for i in filtered_issues if any(label in i.labels for label in labels)]
+            filtered_issues = [i for i in filtered_issues 
+                             if any(label in i.labels for label in labels)]
         
-        return IssueListResponse(issues=filtered_issues, total=len(filtered_issues))
+        total = len(filtered_issues)
+        return IssueListResponse(issues=filtered_issues, total=total)
 
 
 # Global instance for use in API
